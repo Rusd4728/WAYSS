@@ -22,34 +22,18 @@ const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(5, 5, 5);
 scene.add(light);
 
-// 3D ЗАГЛУШКА (КУБ)
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.159.0/examples/jsm/loaders/GLTFLoader.js';
-
-const loader = new GLTFLoader();
-
-let tee;
-
-loader.load(
-  'assets/3d/tee.glb',
-  (gltf) => {
-    tee = gltf.scene;
-    tee.scale.set(1.5, 1.5, 1.5);
-    tee.rotation.y = Math.PI;
-    scene.add(tee);
-  },
-  undefined,
-  (error) => {
-    console.error(error);
-  }
-);
+// КУБ заглушка
+const geometry = new THREE.BoxGeometry(1.5, 2, 0.5);
+const material = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  wireframe: false,
+});
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
 
 function animate() {
   requestAnimationFrame(animate);
-  
- if (tee) {
-    tee.rotation.y += 0.004;
- }
-  
+  cube.rotation.y += 0.01;
   renderer.render(scene, camera);
 }
 
